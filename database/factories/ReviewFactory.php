@@ -25,9 +25,31 @@ class ReviewFactory extends Factory
         ];
     }
 
-    public function goodRating()
+    public function goodReviews()
     {
         return $this->state(function (array $attributes) {
+            return [
+                'rating' => fake()->numberBetween(4, 5)
+            ];
         });
     }
+
+    public function averageReviews()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'rating' => fake()->numberBetween(2, 5)
+            ];
+        });
+    }
+
+    public function badReviews()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'rating' => fake()->numberBetween(1, 3)
+            ];
+        });
+    }
+
 }
