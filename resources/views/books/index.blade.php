@@ -8,9 +8,30 @@
     <form method="GET" action="{{ route('books.index') }}" class="my-2">
         <input type="text" name="title" placeholder="Search by title" value="{{ request('title') }}"
                class="input"/>
+        <input type="hidden" name="filter" value="{{ request('filter') }}"/>
         <button class="btn my-2 mr-4">Search</button>
         <a href="{{ route('books.index') }}" class="btn my-2">Clear</a>
     </form>
+
+    <div class="filter-container">
+        @php
+            $filters = [
+                '' => 'Latest',
+                'popular_last_month' => 'popular last Month',
+                'popular_last_6months' => 'popular last 6 Months',
+                'highest_rated_month' => 'Highest Rated last Month',
+                'highest_rated_6months' => 'Highest Rated last 6 Months',
+            ];
+        @endphp
+
+        @foreach($filters as $key => $label)
+            <a href="{{ route('books.index', [...request()->query(), 'filter' => $key]) }}"
+               class="{{ request('filter') === $key || (request('filter') === null && $key === '') ? 'filter-item-active' : 'filter-item' }}">
+                {{ $label }}
+            </a>
+        @endforeach
+
+    </div>
 
     <ul>
         @forelse($books as $book)
